@@ -7,7 +7,7 @@ from flask_a2.models import User
 
 class RegistrationForm(FlaskForm):
     uname = StringField('Username', validators=[DataRequired(), Length(min=5, max=20)])
-    mfa = StringField('Phone', validators=[DataRequired(), Length(min=10, max=11)])
+    mfa = StringField('Phone', id='2fa', validators=[DataRequired(), Length(min=10, max=11)])
     pword = PasswordField('Password', validators=[DataRequired()])
     confirm_pword = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('pword')])
     submit = SubmitField('Sign Up')
@@ -27,7 +27,7 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     uname = StringField('Username', validators=[DataRequired(), Length(min=5, max=20)])
-    mfa = StringField('Phone Number', validators=[DataRequired(), Length(min=10, max=11)])
+    mfa = StringField('Phone Number', id='2fa', validators=[DataRequired(), Length(min=10, max=11)])
     pword = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')

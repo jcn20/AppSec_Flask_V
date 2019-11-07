@@ -43,14 +43,8 @@
                             {% for error in form.pword.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.pword(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-
-                </div>
-            </fieldset>
+                 </div>
+	    </fieldset>
 
                 <div class="form-group">
                     {{ form.submit(class="btn btn-outline-info") }}

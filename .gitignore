@@ -2,7 +2,6 @@
 .idea
 temp.txt
 __pycache__/
-flask_a2/site.db
 flask_a2/__pycache__/
 lib/
 share/
