@@ -43,7 +43,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Success: Account created for {form.uname.data}!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('register'))
     if request.method == 'POST' and not form.validate():
         flash('FAILURE: Please review the options below and fill/correct any information as needed.', 'danger')
     return render_template('register.html', title='Register', form=form)
@@ -61,7 +61,7 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash(f'Success: Welcome, {form.uname.data}!', 'success')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(url_for('login'))
         elif not user:
             flash(f'FAILURE: The user, {form.uname.data}, does not exist or is incorrect!', 'danger')
         elif mfa != user.mfa:
