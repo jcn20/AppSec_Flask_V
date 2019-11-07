@@ -46,5 +46,5 @@ class LoginForm(FlaskForm):
 
 
 class SubmitForm(FlaskForm):
-    inputtext = StringField('Spell Checker: ', id='inputtext', validators=[DataRequired()])
+    inputtext = StringField('Spell Checker', id='inputtext', validators=[DataRequired()])
     submit = SubmitField('Submit')

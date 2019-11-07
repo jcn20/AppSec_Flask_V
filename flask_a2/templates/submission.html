@@ -3,42 +3,34 @@
 {% block content %}
     <h1 class="text-center">Spell Checking App</h1>
     <h2>Welcome, {{ current_user.uname }}!</h2>
+    <h4> Please input your text below so we can check your most likely not great spelling.</h4>
 
-    <h4> Please input your text below so we can check your most likely not great spelling. 
-    
-	    Just joking, you're loved!
-    </h4>
-    <br>
-    
 
     <form action="" method="post">
         {{ form.hidden_tag() }}
-    <div>
-        {{ form.inputtext.label }}
-        {{ form.inputtext(cols=45, rows=15) }}<br>
+    <p>
+        {{ form.inputtext.label }}<br>
+        {{ form.inputtext(cols=45, rows=10) }}<br>
         {% for error in form.inputtext.errors %}
-        <span style="color:red;">ERROR: [{{ error }}]</span>
+        <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
-    </div>
-    
-    
+    </p>
     <p>{{ form.submit() }}</p>
     </form>
 
 
+
+
     {% if post is defined %}
     <p>
-    <h4> {{ current_user.uname }}'s Submitted Text</h4>
- 
-
+        <h4>Submitted Text</h4>
         <div id="textout">
             {{ post.content }}<br>
         </div>
-	<br>
 
         <h4>Results</h4>
-	<div id="misspelled"><br>
-           Misspelled words: <b>{{ post.result }}</b> <br>
+        <div id="misspelled">
+            <b>{{ post.result }}</b><br>
         </div>
     </p>
     {% endif %}
