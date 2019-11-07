@@ -9,7 +9,6 @@ class RegistrationForm(FlaskForm):
     uname = StringField('Username', validators=[DataRequired(), Length(min=5, max=20)])
     mfa = StringField('Phone', id='2fa', validators=[DataRequired(), Length(min=10, max=11)])
     pword = PasswordField('Password', validators=[DataRequired()])
-    confirm_pword = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('pword')])
     submit = SubmitField('Sign Up')
 
     def validate_uname(self, uname):
