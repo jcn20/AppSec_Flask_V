@@ -7,17 +7,18 @@
 
 
     <form action="" method="post">
-        {{ form.hidden_tag() }}
-    <p>
-        {{ form.inputtext.label }}<br>
-        {{ form.inputtext(cols=45, rows=10) }}<br>
+	    {{ form.hidden_tag() }} <br>
+    <div>
+        {{ form.inputtext.label }}
+        {{ form.inputtext(cols=45, rows=10) }}
         {% for error in form.inputtext.errors %}
         <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
+    </div> 
     <p>{{ form.submit() }}</p>
     </form>
 
+    <br>
 
 
 
@@ -25,12 +26,15 @@
     <p>
         <h4>Submitted Text</h4>
         <div id="textout">
-            {{ post.content }}<br>
+		Submitted: <b>{{ post.content }}</b>
+		<br>
         </div>
+	<br>
+	<br>
 
         <h4>Results</h4>
-        <div id="misspelled">
-            <b>{{ post.result }}</b><br>
+	<div id="misspelled"> 
+           Misspelled words from your post:  <b>{{ post.result }}</b><br>
         </div>
     </p>
     {% endif %}

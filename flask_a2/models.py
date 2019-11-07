@@ -38,8 +38,8 @@ class Post(db.Model):
         f.write(self.content)
         f.flush()
 
-        result = subprocess.check_output([ROOT_PATH + "/a.out", "temp.txt", ROOT_PATH + "/wordlist.txt"])
-        self.result = result.decode("utf-8")
+        output = subprocess.check_output([ROOT_PATH + "/a.out", "temp.txt", ROOT_PATH + "/wordlist.txt"])
+        self.result= output.decode("utf-8")
         f.close()
 
     def get_result(self):
