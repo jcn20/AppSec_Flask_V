@@ -13,7 +13,7 @@
                         {{ form.uname(class="form-control form-control-lg is-invalid") }}
                         <p class="invalid-feedback">
                             {% for error in form.uname.errors %}
-                                <span>{{ error }}</span>
+                                <span id="success">{{ error }}</span>
                             {% endfor %}
                         </p>
                     {% else %}
@@ -28,7 +28,7 @@
                         {{ form.mfa(class="form-control form-control-lg is-invalid") }}
                         <p class="invalid-feedback">
                             {% for error in form.mfa.errors %}
-                                <span>{{ error }}</span>
+                                <span id="success">{{ error }}</span>
                             {% endfor %}
                         </p>
                     {% else %}
@@ -42,7 +42,7 @@
                         {{ form.pword(class="form-control form-control-lg is-invalid") }}
                         <p class="invalid-feedback">
                             {% for error in form.pword.errors %}
-                                <span>{{ error }}</span>
+                                <span id="success">{{ error }}</span>
                             {% endfor %}
                         </p>
                     {% else %}
