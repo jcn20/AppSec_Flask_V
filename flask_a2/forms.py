@@ -17,12 +17,6 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('Failure: That username is already taken.')
 
-    def validate_mfa(self, mfa):
-
-        user = User.query.filter_by(mfa=mfa.data).first()
-        if user:
-            raise ValidationError('Failure: That number is already used for another account.')
-
 
 class LoginForm(FlaskForm):
     uname = StringField('Username', id='uname', validators=[DataRequired(), Length(min=5, max=20)])
