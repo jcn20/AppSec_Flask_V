@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uname = db.Column(db.String(20), unique=True, nullable=False)
     # Change this next one to phone number for 2FA
-    mfa = db.Column(db.String(11), unique=True, nullable=False)
+    mfa = db.Column(db.String(11))
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     pword = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
