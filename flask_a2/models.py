@@ -11,7 +11,7 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uname = db.Column(db.String(20), unique=True, nullable=False)
     # Change this next one to phone number for 2FA
     mfa = db.Column(db.String(11), unique=True, nullable=False)
