@@ -7,7 +7,7 @@
                 <legend class="border-bottom mb-4">Register Today!</legend>
                 
 		<div id="uname" class="form-group">
-                    {{ form.uname.label(class="form-control-label") }}
+			<p id="uname"  {{ form.uname.label(class="form-control-label") }}</p>
 
                     {% if form.uname.errors%}
                         {{ form.uname(class="form-control form-control-lg is-invalid") }}
@@ -17,12 +17,12 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.uname(class="form-control form-control-lg") }}
+		    <p id="uname"> {{ form.uname(class="form-control form-control-lg") }}</p>
                     {% endif %}
                 </div>
 
                 <div id="2fa" class="form-group">
-                    {{ form.mfa.label(class="form-control-label") }}
+		     <p id="2fa" {{ form.mfa.label(class="form-control-label") }}</p>
 
                     {% if form.mfa.errors%}
                         {{ form.mfa(class="form-control form-control-lg is-invalid") }}
@@ -32,12 +32,12 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.mfa(class="form-control form-control-lg") }}
+		    <p id="2fa"> {{ form.mfa(class="form-control form-control-lg") }} </p>
                     {% endif %}
                 </div>
 
-                <div class="form-group">
-                    {{ form.pword.label(class="form-control-label") }}
+                <div id= "pword"class="form-group">
+		<p id="pword">  {{ form.pword.label(class="form-control-label") }}</p>
                     {% if form.pword.errors%}
                         {{ form.pword(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
@@ -46,7 +46,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.pword(class="form-control form-control-lg") }}
+		    <p id="pword"> {{ form.pword(class="form-control form-control-lg") }} </p>
                     {% endif %}
                 </div>
             </fieldset>
