@@ -22,7 +22,7 @@
                 </div>
 
                 <div id="2fa" class="form-group">
-		     <p id="2fa" {{ form.mfa.label(id="2fa", class="form-control-label") }}</p>
+			<p id="2fa"> {{ form.mfa.label(id="2fa", class="form-control-label") }}</p>
 
                     {% if form.mfa.errors%}
                         {{ form.mfa(id="2fa", class="form-control form-control-lg is-invalid") }}
