@@ -7,46 +7,46 @@
                 <legend class="border-bottom mb-4">Register Today!</legend>
                 
 		<div id="uname" class="form-group">
-			<p id="uname"  {{ form.uname.label(class="form-control-label") }}</p>
+			<p id="uname">  {{ form.uname.label(id="uname", class="form-control-label") }}</p>
 
                     {% if form.uname.errors%}
-                        {{ form.uname(class="form-control form-control-lg is-invalid") }}
+                        {{ form.uname(id="uname", class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.uname.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-		    <p id="uname"> {{ form.uname(class="form-control form-control-lg") }}</p>
+		    <p id="uname"> {{ form.uname(id="uname", class="form-control form-control-lg") }}</p>
                     {% endif %}
                 </div>
 
                 <div id="2fa" class="form-group">
-		     <p id="2fa" {{ form.mfa.label(class="form-control-label") }}</p>
+		     <p id="2fa" {{ form.mfa.label(id="2fa", class="form-control-label") }}</p>
 
                     {% if form.mfa.errors%}
-                        {{ form.mfa(class="form-control form-control-lg is-invalid") }}
+                        {{ form.mfa(id="2fa", class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.mfa.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-		    <p id="2fa"> {{ form.mfa(class="form-control form-control-lg") }} </p>
+		    <p id="2fa"> {{ form.mfa(id="2fa", class="form-control form-control-lg") }} </p>
                     {% endif %}
                 </div>
 
                 <div id= "pword"class="form-group">
-		<p id="pword">  {{ form.pword.label(class="form-control-label") }}</p>
+		<p id="pword">  {{ form.pword.label(id="pword", class="form-control-label") }}</p>
                     {% if form.pword.errors%}
-                        {{ form.pword(class="form-control form-control-lg is-invalid") }}
+                        {{ form.pword(id="pword", class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.pword.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-		    <p id="pword"> {{ form.pword(class="form-control form-control-lg") }} </p>
+		        {{ form.pword(id="pword", class="form-control form-control-lg") }} 
                     {% endif %}
                 </div>
             </fieldset>
