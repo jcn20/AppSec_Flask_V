@@ -38,7 +38,7 @@ class LoginForm(FlaskForm):
             raise ValidationError('Failure: That username does not exist.')
         elif not mfa:
             raise ValidationError('Failure: Your 2fa is incorrect.')
-        elif len(mfa.data) > 10:
+        elif len(mfa.data) > 11:
             raise ValidationError('Failure: You should only input 10 - 11 numbers.')
         else:
             pass
