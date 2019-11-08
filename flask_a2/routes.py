@@ -81,9 +81,9 @@ def logout():
 def account():
     return render_template('account.html', title='Account')
 
-@app.route("/submission", methods=['GET', 'POST'])
+@app.route("/spell_check", methods=['GET', 'POST'])
 @login_required
-def submission():
+def spell_check():
     form = SubmitForm()
     if form.validate_on_submit():
         post = Post(content=form.inputtext.data, user_id=current_user.id)
@@ -91,7 +91,7 @@ def submission():
         db.session.add(post)
         db.session.commit()
         flash('Successfully submitted your post!', 'success')
-        return render_template("submission.html", title='Submit Text', form=form, post=post)
-    return render_template('submission.html', title='Submit Text', form=form)
+        return render_template("spell_check.html", title='Submit Text', form=form, post=post)
+    return render_template('spell_check.html', title='Submit Text', form=form)
 
 

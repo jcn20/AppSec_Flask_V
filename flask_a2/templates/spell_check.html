@@ -1,0 +1,41 @@
+{%  extends "layout.html" %}
+{% block title %}Spell Checker{% endblock %}
+{% block content %}
+    <h1 class="text-center">Spell Checking App</h1>
+    <h2>Welcome, {{ current_user.uname }}!</h2>
+    <h4> Please input your text below so we can check your most likely not great spelling.</h4>
+
+
+    <form action="" method="post">
+	    {{ form.hidden_tag() }} <br>
+    <div>
+        {{ form.inputtext.label }}
+        {{ form.inputtext(cols=45, rows=10) }}
+        {% for error in form.inputtext.errors %}
+        <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </div> 
+    <p>{{ form.submit() }}</p>
+    </form>
+
+    <br>
+
+
+
+    {% if post is defined %}
+    <p>
+        <h4>Submitted Text</h4>
+        <div id="textout">
+		Submitted: <b>{{ post.content }}</b>
+		<br>
+        </div>
+	<br>
+	<br>
+
+        <h4>Results</h4>
+	<div id="misspelled"> 
+           Misspelled words from your post:  <b>{{ post.result }}</b><br>
+        </div>
+    </p>
+    {% endif %}
+{% endblock %}
