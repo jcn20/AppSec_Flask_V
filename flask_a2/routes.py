@@ -65,7 +65,7 @@ def login():
         elif not user:
             flash(f'FAILURE: The user, {form.uname.data}, does not exist or is incorrect!', 'danger')
         elif mfa != user.mfa:
-            flash('FAILURE: Incorrect 2fa used.', 'danger')
+            flash('FAILURE: Incorrect Two-factor authentication used.', 'danger')
         else:
             flash('FAILURE: Your credentials are incorrect. Please check your credentials.', 'danger')
     return render_template('login.html', title='Login', form=form)
