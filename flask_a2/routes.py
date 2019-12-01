@@ -6,20 +6,9 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 
 posts = [
-    {
-        'author': 'Julio Nunez',
-        'title': 'Blog Post 1',
-        'content': 'First post content',
-        'date_posted': 'November 1, 2019'
-    },
-    {
-        'author': 'Julio Nunez',
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'November 1, 2019'
-    }
-]
-
+        {
+            }
+        ]
 
 @app.route("/")
 @app.route("/home")
