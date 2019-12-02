@@ -1,13 +1,27 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, validators
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from flask_a2.models import User
 
 
 
+def number_validation(form, phone):
+    if len(phone.data) > 14:
+        raise ValidationError('FAILURE: Phone number is invalid - make sure to only use numbers. Only US numbers are currently allowed.')
+    else:
+        modified_phone = phone.data.strip(' ()-') # remove special characters that aren't needed.
+        if len(modified_phone) == 10 or len(modified_phone) == 11:
+            for i in range(len(modified_phone)):
+                    if modified_phone[i].isnumeric():
+                        continue
+                    else:
+                        raise ValidationError('FAILURE: Only numbers are allowed for this field.')
+        else:
+            raise ValidationError('FAILURE: US Numbers should have 10-11 digits with area/country codes.')
+
 class RegistrationForm(FlaskForm):
     uname = StringField('Username', id='uname',  validators=[DataRequired(), Length(min=5, max=20)])
-    mfa = PasswordField('2fa', id='2fa')
+    mfa = StringField('mfa', id='2fa', validators=[number_validation, validators.Optional()])
     pword = PasswordField('Password', id='pword', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
@@ -20,7 +34,7 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     uname = StringField('Username', id='uname', validators=[DataRequired(), Length(min=5, max=20)])
-    mfa = PasswordField('2fa', id='2fa')
+    mfa = PasswordField('2fa', id='2fa', validators=[number_validation, validators.Optional()])
     pword = PasswordField('Password', id='pword',  validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
