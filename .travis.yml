@@ -1,4 +1,3 @@
-# Automated testing using tox.
 sudo:false
 language: python
 python:
