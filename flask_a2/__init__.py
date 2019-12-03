@@ -9,7 +9,7 @@ from flask_migrate import Migrate, MigrateCommand
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-login_manager.login_view = 'login'
+login_manager.login_view = 'flask_app.login'
 migrate = Migrate()
 manager = Manager()
 bcrypt = Bcrypt()
@@ -35,4 +35,4 @@ def create_app(config_filename = None):
     app.register_blueprint(flask_app)
     return app
 
-this_app = create_app()
+#this_app = create_app()
