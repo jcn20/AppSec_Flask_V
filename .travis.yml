@@ -1,7 +1,6 @@
 sudo: true
 language: python
-        - "3.6"
-        - "3.7"
+        - "3.6.9"
 adons:
         apt:
                 packages:
