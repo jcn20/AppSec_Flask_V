@@ -1,6 +1,7 @@
 sudo: true
 dist: bionic
 language: python
+        - "2.7"
         - "3.6"
 
 addons: 
