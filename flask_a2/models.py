@@ -20,21 +20,12 @@ class User(db.Model, UserMixin):
     pword = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
-#
-#    def setters(self, uname, mfa, plaintext_password):
-#        self.uname = uname
-#        self.mfa = mfa
-#        self.password = plaintext_password
+    def set_password(self, password):
+        self.pword = bcrypt.generate_password_hash(pword)
 
-#    def password(self):
-#        return self.pword
+    def check_pword(self, password):
+        return bcrypt.check_password_hash(self.pword, password)
 
-#    def set_password(self, plaintext_password):
-#        self.pword = bcrypt.generate_password_hash(plaintext_password)
-
-#    def is_correct_password(self, plaintext_password):
-#        return bcrypt.check_password_hash(plaintext_password)
- 
     def __repr__(self):
         return f"User('{self.uname}', '{self.mfa}', '{self.image_file}')"
     
