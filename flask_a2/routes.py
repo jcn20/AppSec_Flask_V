@@ -1,8 +1,10 @@
-from flask import render_template, url_for, flash, redirect, request
-from flask_a2 import app, db, bcrypt
+from flask import current_app, render_template, url_for, flash, redirect, request, Blueprint
+from flask_a2 import  db, bcrypt
 from flask_a2.forms import RegistrationForm, LoginForm, SubmitForm
 from flask_a2.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
+
+flask_app = Blueprint('flask_app', __name__, template_folder='templates')
 
 
 posts = [
@@ -10,21 +12,21 @@ posts = [
             }
         ]
 
-@app.route("/")
-@app.route("/home")
+@flask_app.route("/")
+@flask_app.route("/home")
 def home():
     return render_template('home.html', title='Home', posts=posts)
 
 
-@app.route("/about")
+@flask_app.route("/about")
 def about():
     return render_template('about.html', title='About')
 
 
-@app.route("/register", methods=['GET', 'POST'])
+@flask_app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('flask_app.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.pword.data).decode('utf-8')
@@ -32,16 +34,16 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Success: Account created for {form.uname.data}!', 'success')
-        return redirect(url_for('register'))
+        return redirect(url_for('flask_app.register'))
     if request.method == 'POST' and not form.validate():
         flash('FAILURE: Please review the options below and fill/correct any information as needed.', 'danger')
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@flask_app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('flask_app.home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(uname=form.uname.data).first()
@@ -50,7 +52,7 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash(f'Success: Welcome, {form.uname.data}!', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('flask_app.login'))
         elif not user:
             flash(f'FAILURE: The user, {form.uname.data}, does not exist or is incorrect!', 'danger')
         elif mfa != user.mfa:
@@ -60,17 +62,17 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@app.route("/logout")
+@flask_app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('flask_app.home'))
 
-@app.route("/account")
+@flask_app.route("/account")
 @login_required
 def account():
     return render_template('account.html', title='Account')
 
-@app.route("/spell_check", methods=['GET', 'POST'])
+@flask_app.route("/spell_check", methods=['GET', 'POST'])
 @login_required
 def spell_check():
     form = SubmitForm()

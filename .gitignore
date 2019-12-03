@@ -7,3 +7,5 @@ lib/
 share/
 bin/
 include/
+flask_a2/site.db
+.tox

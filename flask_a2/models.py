@@ -1,8 +1,9 @@
 from datetime import datetime
-from flask_a2 import db, login_manager
+from flask_sqlalchemy import SQLAlchemy
+from flask_a2 import db, login_manager, bcrypt
 from flask_login import UserMixin
 import subprocess
-from definitions import ROOT_PATH
+from config import ROOT_PATH
 
 
 @login_manager.user_loader
@@ -19,8 +20,24 @@ class User(db.Model, UserMixin):
     pword = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
+#
+#    def setters(self, uname, mfa, plaintext_password):
+#        self.uname = uname
+#        self.mfa = mfa
+#        self.password = plaintext_password
+
+#    def password(self):
+#        return self.pword
+
+#    def set_password(self, plaintext_password):
+#        self.pword = bcrypt.generate_password_hash(plaintext_password)
+
+#    def is_correct_password(self, plaintext_password):
+#        return bcrypt.check_password_hash(plaintext_password)
+ 
     def __repr__(self):
         return f"User('{self.uname}', '{self.mfa}', '{self.image_file}')"
+    
 
 
 class Post(db.Model):

@@ -1,5 +1,5 @@
-from flask_a2 import app
+from flask_a2 import create_app, db
+from flask_a2.models import User, Post
 
-# Run the app in debug mode.
-if __name__ == '__main__':
-    app.run(debug=True)
+
+app = create_app('config.py')
