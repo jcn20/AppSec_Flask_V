@@ -1,6 +1,7 @@
 sudo: true
 dist: bionic
 language: python
+        - "2.7"
         - "3.6"
 
 addons: 
@@ -10,7 +11,8 @@ addons:
                         - "python3-pip"
 before_install: 
         - sudo apt-get update
+        - sudo apt-get install python3-setuptools
 install: 
         - pip3 install -r requirements.txt
 script: 
-        - tox
+        - pytest
