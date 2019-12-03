@@ -1,4 +1,4 @@
-sudo: true
+sudo: false
 dist: bionic
 language: python
         - "3.6"
@@ -9,8 +9,8 @@ addons:
                         - "python3"
                         - "python3-pip"
 before_install: 
-        - sudo apt-get update
+        - apt-get update
 install: 
-        - sudo pip3 install -r requirements.txt
+        - pip3 install -r requirements.txt
 script: 
         - tox
