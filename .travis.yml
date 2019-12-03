@@ -1,14 +1,7 @@
 sudo: true
 language: python
         - "3.6.9"
-adons:
-        apt:
-                packages:
-                        - python3-pip
-
-before_install:
-        - python3 -m pip install --upgrade pip
 install: 
-        - pip3 install -r requirements.txt
+        - pip install -r requirements.txt
 script: 
         - tox
