@@ -37,6 +37,7 @@ def test_valid_login_pages_u1(app_test):
     response = app_test.post('/login', data=dict(uname='jcnTEST1', mfa='3476221946', pword='pword1'), follow_redirects=True)
     assert response.status_code == 200
 
+
     response = app_test.get('/logout', follow_redirects=True)
     assert response.status_code == 200
 
