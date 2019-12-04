@@ -494,7 +494,39 @@ Instances: 9
   
   
   
+* URL: [http://localhost:5000/login](http://localhost:5000/login)
+  
+  
+  * Method: `GET`
+  
+  
+  
+  
+* URL: [http://localhost:5000/](http://localhost:5000/)
+  
+  
+  * Method: `GET`
+  
+  
+  
+  
 * URL: [http://localhost:5000/register](http://localhost:5000/register)
+  
+  
+  * Method: `POST`
+  
+  
+  
+  
+* URL: [http://localhost:5000/register](http://localhost:5000/register)
+  
+  
+  * Method: `GET`
+  
+  
+  
+  
+* URL: [http://localhost:5000/login](http://localhost:5000/login)
   
   
   * Method: `POST`
@@ -558,6 +590,14 @@ Instances: 9
   
   
   
+* URL: [http://localhost:5000/register](http://localhost:5000/register)
+  
+  
+  * Method: `POST`
+  
+  
+  
+  
 * URL: [http://localhost:5000/login](http://localhost:5000/login)
   
   
@@ -566,13 +606,13 @@ Instances: 9
   
   
   
-Instances: 9
+Instances: 14
   
 ### Solution
 <p>Always scope cookies to a FQDN (Fully Qualified Domain Name).</p>
   
 ### Other information
-<p>The origin domain used for comparison was: </p><p>localhost</p><p>session=eyJfZnJlc2giOmZhbHNlLCJjc3JmX3Rva2VuIjoiYjUzZDBkM2E1OWYzYTc4N2NhNmU0Zjg2ZWY5OWRmYzk3ZDFkNGY5MyJ9.XebMmg.SHka_nXmXsb2UOjBWUsB14-9xGQ</p><p></p>
+<p>The origin domain used for comparison was: </p><p>localhost</p><p>session=eyJjc3JmX3Rva2VuIjoiOWMyOTA4MDU5ZTYxYjc5ZjA5NTEzMWU4MWE0NzRmYzcxOGY3ZGFlMSJ9.XecuDA.gb6bqlYpSiE1xbhFCusEP1H7iDI</p><p></p>
   
 ### Reference
 * https://tools.ietf.org/html/rfc6265#section-4.1
