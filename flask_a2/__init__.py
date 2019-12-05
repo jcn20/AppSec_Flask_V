@@ -35,4 +35,3 @@ def create_app(config_filename = None):
     app.register_blueprint(flask_app)
     return app
 
-#this_app = create_app()
