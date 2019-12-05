@@ -45,6 +45,10 @@ def test_valid_registration(app_test):
     response = app_test.post('/register', data=dict(uname='julioTEST2', pword='pword2', mfa='13479222965'), follow_redirects=True)
     assert response.status_code == 200
 
+    response = app_test.post('/login', data=dict(uname='julioTEST2', pword='pword2', mfa='13479222965'), follow_redirects=True)
+    assert response.status_code == 200
+
+
     response = app_test.get('/logout', follow_redirects=True)
     assert response.status_code == 200
 
