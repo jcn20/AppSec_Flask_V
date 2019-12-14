@@ -67,3 +67,18 @@ class LoginForm(FlaskForm):
 class SubmitForm(FlaskForm):
     inputtext = StringField('Type your text here: ', id='inputtext', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class UserLogActivity(FlaskForm):
+    inputtext = StringField('Type your text here: ', id='userid', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class UserPostHistory(FlaskForm):
+    inputtext = StringField('Type your text here: ', id='userquery', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+    
+    def validate_uname(self, uname):
+
+        user = User.query.filter_by(uname=uname.data).first()
+        if user:
+            raise ValidationError('Failure: That user does not exist.')
+

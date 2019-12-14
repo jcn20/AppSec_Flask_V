@@ -18,10 +18,10 @@ class User(db.Model, UserMixin):
     # Change this next one to phone number for 2FA
     mfa = db.Column(db.String(11))
     pword = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    post = db.relationship('Post', backref='author', lazy='dynamic')
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     queries = db.Column(db.Integer, default=0)
-    admin_user = db.Column(db.Boolean) # Is the user an admin or not? Add additional functionality.
+    admin_user = db.Column(db.Boolean, default=False) # Is the user an admin or not? Add additional functionality.
     history = db.relationship('History', backref='source_owner', lazy='dynamic')
 
     def get_uname(self):
@@ -102,6 +102,8 @@ class Post(db.Model):
         output = subprocess.check_output([ROOT_PATH + "/a.out", "temp.txt", ROOT_PATH + "/wordlist.txt"])
         self.result= output.decode("utf-8")
         f.close()
+    def set_date_posted(self, time):
+        self.date_posted = time
 
     def get_result(self):
         return self.result

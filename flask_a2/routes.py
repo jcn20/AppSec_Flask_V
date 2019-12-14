@@ -96,13 +96,29 @@ def spell_check():
         current_user.query_incrementer()
         post = Post(content=form.inputtext.data, user_id=current_user.id)
         post.set_result()
+        post.set_date_posted(datetime.utcnow())
         db.session.add(post)
         db.session.commit()
         flash('Successfully submitted your post!', 'success')
         return render_template("spell_check.html", title='Submit Text', form=form, post=post)
     return render_template('spell_check.html', title='Submit Text', form=form)
 
-@flask_app.route('/history/query<int:post_id>', methods=['GET'])
+@flask_app.route("/history", methods=['GET', 'POST'])
+@login_required
+def history():
+    if current_user.admin_user:
+        user_base = User.query.all()
+        form = UserPostHistory()
+        if form.validate_on_submit():
+            target_user = User.query.filter_by(username=form.uname.data).first()
+            user_posts = target_user.post.all()
+            return render_template('history.html', posts=user_posts, user=target_user)
+    else:
+        posts = current_user.post.all()
+        title = current_user.uname + "'s Queries"
+        return render_template('history.html', title=title, posts=posts, user=current_user)
+
+@flask_app.route("/history/query<int:post_id>", methods=['GET'])
 @login_required
 def query(post_id):
     try:
