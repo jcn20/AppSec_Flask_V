@@ -93,6 +93,7 @@ def apply_caching(response):
 def spell_check():
     form = SubmitForm()
     if form.validate_on_submit():
+        current_user.query_incrementer()
         post = Post(content=form.inputtext.data, user_id=current_user.id)
         post.set_result()
         db.session.add(post)
