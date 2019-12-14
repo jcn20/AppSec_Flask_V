@@ -19,7 +19,7 @@ def number_validation(form, phone):
         else:
             raise ValidationError('FAILURE: US Numbers should have 10-11 digits with area/country codes.')
 
-#def user_validation(form, user):
+# def user_validation(form, user):
 #    if len(user.data) > 20:
 #        raise ValidationError('FAILURE: Usernames can not be greater than 20 characters.')
 #    if len(user.data) < 5: 
@@ -32,7 +32,7 @@ def number_validation(form, phone):
 #            raise ValidationError('FAILURE: Special characters are not allowed.')
 
 class RegistrationForm(FlaskForm):
-    uname = StringField('Username', id='uname',  validators=[user_validation, DataRequired()])
+    uname = StringField('Username', id='uname',  validators=[DataRequired()])
     mfa = StringField('mfa', id='2fa', validators=[number_validation, validators.Optional()])
     pword = PasswordField('Password', id='pword', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
@@ -45,7 +45,7 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    uname = StringField('Username', id='uname', validators=[user_validation, DataRequired()])
+    uname = StringField('Username', id='uname', validators=[DataRequired()])
     mfa = PasswordField('2fa', id='2fa', validators=[number_validation, validators.Optional()])
     pword = PasswordField('Password', id='pword',  validators=[DataRequired()])
     remember = BooleanField('Remember Me')
