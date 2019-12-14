@@ -1,6 +1,6 @@
 from flask import current_app, render_template, url_for, flash, redirect, request, Blueprint
 from flask_a2 import  db, bcrypt
-from flask_a2.forms import RegistrationForm, LoginForm, SubmitForm
+from flask_a2.forms import RegistrationForm, LoginForm, SubmitForm, UserPostHistory
 from flask_a2.models import User, Post, History
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -106,13 +106,14 @@ def spell_check():
 @flask_app.route("/history", methods=['GET', 'POST'])
 @login_required
 def history():
-    if current_user.admin_user:
+    if current_user.uname == 'admin':
         user_base = User.query.all()
         form = UserPostHistory()
         if form.validate_on_submit():
-            target_user = User.query.filter_by(username=form.uname.data).first()
+            target_user = User.query.filter_by(uname=form.uname.data).first()
             user_posts = target_user.post.all()
             return render_template('history.html', posts=user_posts, user=target_user)
+        return render_template('history_admin.html', form=form, users=user_base)
     else:
         posts = current_user.post.all()
         title = current_user.uname + "'s Queries"
@@ -124,7 +125,7 @@ def query(post_id):
     try:
         post = Post.query.get(post_id)
         author = post.get_user()
-        if author == current_user.uname or current_user.get_admin_role():
+        if author == current_user.uname or current_user.uname == 'admin':
             return render_template("queryid.html", post=post)
         else:
             flash('You are not authorized to view this post.', 'danger')

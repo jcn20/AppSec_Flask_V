@@ -19,17 +19,17 @@ def number_validation(form, phone):
         else:
             raise ValidationError('FAILURE: US Numbers should have 10-11 digits with area/country codes.')
 
-def user_validation(form, user):
-    if len(user.data) > 20:
-        raise ValidationError('FAILURE: Usernames can not be greater than 20 characters.')
-    if len(user.data) < 5: 
-      raise ValidationError('FAILURE: Usernames can not be less than 5 characters.')
-    username = user.data
-    for i in range(len(username)):
-        if username[i].isalnum():
-            continue
-        else:
-            raise ValidationError('FAILURE: Special characters are not allowed.')
+#def user_validation(form, user):
+#    if len(user.data) > 20:
+#        raise ValidationError('FAILURE: Usernames can not be greater than 20 characters.')
+#    if len(user.data) < 5: 
+#      raise ValidationError('FAILURE: Usernames can not be less than 5 characters.')
+#    username = user.data
+#    for i in range(len(username)):
+#        if username[i].isalnum():
+#            continue
+#        else:
+#            raise ValidationError('FAILURE: Special characters are not allowed.')
 
 class RegistrationForm(FlaskForm):
     uname = StringField('Username', id='uname',  validators=[user_validation, DataRequired()])
@@ -73,7 +73,7 @@ class UserLogActivity(FlaskForm):
     submit = SubmitField('Submit')
 
 class UserPostHistory(FlaskForm):
-    inputtext = StringField('Type your text here: ', id='userquery', validators=[DataRequired()])
+    uname = StringField('Type the user you want to search: ', id='userquery', validators=[DataRequired()])
     submit = SubmitField('Submit')
     
     def validate_uname(self, uname):
