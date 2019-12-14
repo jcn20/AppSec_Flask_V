@@ -77,7 +77,7 @@ class SubmitForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class UserLogActivity(FlaskForm):
-    inputtext = StringField('Type your text here: ', id='userid', validators=[DataRequired()])
+    userid = StringField('User Search: ', id='userid', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class UserPostHistory(FlaskForm):
@@ -88,5 +88,6 @@ class UserPostHistory(FlaskForm):
 
         user = User.query.filter_by(uname=uname.data).first()
         if not user:
+            flash('Failure: There was an error in your submission. See below.', 'danger')
             raise ValidationError('Failure: That user does not exist.')
 

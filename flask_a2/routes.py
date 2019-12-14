@@ -1,6 +1,6 @@
 from flask import current_app, render_template, url_for, flash, redirect, request, Blueprint
 from flask_a2 import  db, bcrypt
-from flask_a2.forms import RegistrationForm, LoginForm, SubmitForm, UserPostHistory
+from flask_a2.forms import RegistrationForm, LoginForm, SubmitForm, UserPostHistory, UserLogActivity
 from flask_a2.models import User, Post, History
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -106,6 +106,7 @@ def history():
         user_base = User.query.all()
         form = UserPostHistory()
         if form.validate_on_submit():
+            flash('Success: Successfully found the user and their queries!', 'success')
             target_user = User.query.filter_by(uname=form.uname.data).first()
             user_posts = target_user.post.all()
             return render_template('history.html', posts=user_posts, user=target_user)
@@ -129,6 +130,22 @@ def query(post_id):
     except:
         flash('FAILURE: No post found.', 'danger')
         return render_template("home.html")
+
+@flask_app.route('/login_history', methods=['GET', 'POST'])
+@login_required
+def login_history():
+    if current_user.uname == 'admin':
+        form = UserLogActivity()
+        user_base = User.query.all()
+        
+        if form.validate_on_submit():
+            user = User.query.get(form.userid.data)
+            return render_template("user_activity.html", title="Admin Page", form=form, users=user_base, user=user)
+        
+        return render_template("user_activity.html", title="Admin Page", form=form, users=user_base)
+    else:
+        flash('FAILURE: Not allowed.', 'danger')
+        return redirect(url_for('flask_app.home'))
 
 @flask_app.after_request
 def apply_caching(response):

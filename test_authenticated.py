@@ -23,8 +23,10 @@ def init_database():
 
     user1 = User(uname='jcnTEST1', pword='pword1', mfa='3476221946')
     user2 = User(uname = 'jcnTEST2', pword='pword2', mfa='3474221046')
+    user3 = User(uname='xsrf_test', pword='password', mfa='17572028961')
     db.session.add(user1)
     db.session.add(user2)
+    db.session.add(user3)
 
     db.session.commit()
 
@@ -37,8 +39,11 @@ def test_valid_login_pages_u1(app_test):
     response = app_test.post('/login', data=dict(uname='jcnTEST1', mfa='3476221946', pword='pword1'), follow_redirects=True)
     assert response.status_code == 200
 
-
     response = app_test.get('/logout', follow_redirects=True)
+    assert response.status_code == 200
+
+def test_calid_login_page_u2(app_test):
+    response = app_test.post('/login', data=dict(uname='xsrf_test', pword='password', mfa='17572028961'), follow_redirects=True)
     assert response.status_code == 200
 
 def test_valid_registration(app_test):
@@ -49,7 +54,5 @@ def test_valid_registration(app_test):
     assert response.status_code == 200
 
 
-    response = app_test.get('/logout', follow_redirects=True)
-    assert response.status_code == 200
 
 
