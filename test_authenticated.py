@@ -1,6 +1,6 @@
 import pytest
 from flask_a2 import create_app, db
-from flask_a2.models import User
+from flask_a2.models import User, History
 from flask_a2.routes import flask_app
 ##### Start the app ######
 
