@@ -58,12 +58,8 @@ def login():
             next_page = request.args.get('next')
             flash(f'Success: Welcome, {form.uname.data}!', 'success')
             return redirect(url_for('flask_app.login'))
-        elif not user:
-            flash(f'FAILURE: The user, {form.uname.data}, does not exist or is incorrect!', 'danger')
-        elif mfa != user.mfa:
-            flash('FAILURE: Incorrect Two-factor authentication used.', 'danger')
-        else:
-            flash('FAILURE: Your credentials are incorrect. Please check your credentials.', 'danger')
+    if request.method == 'POST' and not form.validate():
+        flash('FAILURE: Please review the options below and fill/correct any information as needed.', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 

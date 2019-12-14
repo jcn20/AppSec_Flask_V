@@ -9,6 +9,7 @@ from flask_a2.models import User
 def number_validation(form, phone):
     if len(phone.data) > 14:
         raise ValidationError('FAILURE: Phone number is invalid - make sure to only use numbers. Only US numbers are currently allowed.')
+        flash('Failure: Your phone number is too long. Please review below.', 'danger')
     else:
         modified_phone = phone.data.strip(' ()-') # remove special characters that aren't needed.
         if len(modified_phone) == 10 or len(modified_phone) == 11:
@@ -17,8 +18,10 @@ def number_validation(form, phone):
                         continue
                     else:
                         raise ValidationError('FAILURE: Only numbers are allowed for this field.')
+                        flash('FAILURE: Only numbers are allowed for mfa.', 'danger')
         else:
             raise ValidationError('FAILURE: US Numbers should have 10-11 digits with area/country codes.')
+            flash('Failure: US Numbers should only have 10-11 digits with area/country codes.')
 
 # def user_validation(form, user):
 #    if len(user.data) > 20:
@@ -43,6 +46,7 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(uname=uname.data).first()
         if user:
             raise ValidationError('Failure: That username is already taken.')
+            flash('FAILURE: That username already exists.', 'danger')
 
 
 class LoginForm(FlaskForm):
