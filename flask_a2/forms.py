@@ -1,3 +1,4 @@
+from flask import flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, validators
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
@@ -56,10 +57,13 @@ class LoginForm(FlaskForm):
         user = User.query.filter_by(uname=uname.data, mfa=mfa.data).first()
         if not user:
             raise ValidationError('Failure: That username does not exist.')
+            flash('FAILURE: That username does not exist.', 'danger')
         elif not mfa:
             raise ValidationError('Failure: Your 2fa is incorrect.')
+            flash('FAILURE: Your 2fa is incorrect.', 'danger')
         elif len(mfa.data) > 11:
             raise ValidationError('Failure: You should only input 10 - 11 numbers.')
+            flash('FAILURE: Invalid mfa number used.', 'danger')
         else:
             pass
 
