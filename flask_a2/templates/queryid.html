@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block title %} All Queries {% endblock %}
-{% block body %}
+{% block content %}
 	<h2> Query: </h2>
 		<p id="queryid">{{ post.get_id() }}</p>
 		<h4> Posted by: </h4>
-			<p id="username">{{ post.get_author() }}</p>
+			<p id="username">{{ post.get_user() }}</p>
 		<h3> Text Originally Submitted: </h3>
 			<p id="querytext"> {{ post.get_content() }} </p>
 		<h3> Spell Checker Results: </h3>

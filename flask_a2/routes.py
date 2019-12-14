@@ -102,6 +102,21 @@ def spell_check():
         return render_template("spell_check.html", title='Submit Text', form=form, post=post)
     return render_template('spell_check.html', title='Submit Text', form=form)
 
+@flask_app.route('/history/query<int:post_id>', methods=['GET'])
+@login_required
+def query(post_id):
+    try:
+        post = Post.query.get(post_id)
+        author = post.get_user()
+        if author == current_user.uname or current_user.get_admin_role():
+            return render_template("queryid.html", post=post)
+        else:
+            flash('You are not authorized to view this post.', 'danger')
+            return render_template("home.html")
+    except:
+        flash('FAILURE: No post found.', 'danger')
+        return render_template("home.html")
+
 @flask_app.after_request
 def apply_caching(response):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
