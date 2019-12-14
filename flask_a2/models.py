@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_a2 import db, login_manager, bcrypt
 from flask_login import UserMixin
 import subprocess
+from datetime import datetime
 from config import ROOT_PATH
 
 
@@ -21,13 +22,13 @@ class User(db.Model, UserMixin):
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     queries = db.Column(db.Integer, default=0)
     admin_user = db.Column(db.Boolean) # Is the user an admin or not? Add additional functionality.
-    log_history = db.relationship('History', backref='source_owner', lazy='dynamic')
+    history = db.relationship('History', backref='source_owner', lazy='dynamic')
 
     def get_uname(self):
         return self.uname
 
     def set_password(self, password):
-        self.pword = bcrypt.generate_password_hash(pword)
+        self.pword = bcrypt.generate_password_hash(password)
 
     def check_pword(self, password):
         return bcrypt.check_password_hash(self.pword, password)

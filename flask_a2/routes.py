@@ -1,8 +1,9 @@
 from flask import current_app, render_template, url_for, flash, redirect, request, Blueprint
 from flask_a2 import  db, bcrypt
 from flask_a2.forms import RegistrationForm, LoginForm, SubmitForm
-from flask_a2.models import User, Post
+from flask_a2.models import User, Post, History
 from flask_login import login_user, current_user, logout_user, login_required
+from datetime import datetime
 
 flask_app = Blueprint('flask_app', __name__, template_folder='templates')
 
@@ -29,8 +30,9 @@ def register():
         return redirect(url_for('flask_app.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.pword.data).decode('utf-8')
-        user = User(uname=form.uname.data, mfa=form.mfa.data, pword=hashed_password)
+        user = User(uname=form.uname.data, mfa=form.mfa.data)
+        user.set_password(form.pword.data)
+        user.set_created_time(datetime.utcnow())
         db.session.add(user)
         db.session.commit()
         flash(f'Success: Account created for {form.uname.data}!', 'success')
@@ -48,8 +50,11 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(uname=form.uname.data).first()
         mfa = form.mfa.data
-        if user and (mfa == user.mfa) and bcrypt.check_password_hash(user.pword, form.pword.data):
+        if user and (mfa == user.mfa) and user.check_pword(form.pword.data):
             login_user(user, remember=form.remember.data)
+            login_history = History(login_timestamp=datetime.utcnow(), uid=current_user.id)
+            db.session.add(login_history)
+            db.session.commit()
             next_page = request.args.get('next')
             flash(f'Success: Welcome, {form.uname.data}!', 'success')
             return redirect(url_for('flask_app.login'))
@@ -64,13 +69,24 @@ def login():
 
 @flask_app.route("/logout")
 def logout():
+    log_history = current_user.history.order_by(History.id.desc()).first()
+    log_history.set_logout_time(datetime.utcnow())
+    db.session.add(log_history)
+    db.session.commit()
     logout_user()
+    flash('SUCCESS: You have logged out.', 'success')
     return redirect(url_for('flask_app.home'))
 
 @flask_app.route("/account")
 @login_required
 def account():
     return render_template('account.html', title='Account')
+
+@flask_app.after_request
+def apply_caching(response):
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    return response
+
 
 @flask_app.route("/spell_check", methods=['GET', 'POST'])
 @login_required
@@ -85,4 +101,7 @@ def spell_check():
         return render_template("spell_check.html", title='Submit Text', form=form, post=post)
     return render_template('spell_check.html', title='Submit Text', form=form)
 
-
+@flask_app.after_request
+def apply_caching(response):
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    return response
