@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %} Query History {% endblock %}
+{% block content %}
+	<h3> Query History for All Users</h3>
+	
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.uname.label }}<br>
+			{{ form.uname(cols=30, rows=4) }}<br>
+		{% for error in form.uname.errors %}
+			<span style="color:red;"> [{{ error}}]</span>
+	{% endfor %}
+		</p>
+		<p>{{ form.submit() }} </p>
+	</form>
+{% endblock %}
