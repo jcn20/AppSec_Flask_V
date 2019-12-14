@@ -87,6 +87,6 @@ class UserPostHistory(FlaskForm):
     def validate_uname(self, uname):
 
         user = User.query.filter_by(uname=uname.data).first()
-        if user:
+        if not user:
             raise ValidationError('Failure: That user does not exist.')
 
