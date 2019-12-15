@@ -50,6 +50,11 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(uname=form.uname.data).first()
         mfa = form.mfa.data
+        
+        if user is None or not user.check_pword(form.pword.data):
+            flash('FAILURE: The specified user does not exist or your password was incorrect. Try again.', 'danger')
+            return redirect(url_for('flask_app.login'))
+
         if user and (mfa == user.mfa) and user.check_pword(form.pword.data):
             login_user(user, remember=form.remember.data)
             login_history = History(login_timestamp=datetime.utcnow(), uid=current_user.id)
