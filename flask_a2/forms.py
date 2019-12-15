@@ -4,8 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, valid
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from flask_a2.models import User
 
-
-
+#### Validators ####
 def number_validation(form, phone):
     if len(phone.data) > 14:
         raise ValidationError('FAILURE: Phone number is invalid - make sure to only use numbers. Only US numbers are currently allowed.')
@@ -23,20 +22,38 @@ def number_validation(form, phone):
             raise ValidationError('FAILURE: US Numbers should have 10-11 digits with area/country codes.')
             flash('Failure: US Numbers should only have 10-11 digits with area/country codes.')
 
-# def user_validation(form, user):
-#    if len(user.data) > 20:
-#        raise ValidationError('FAILURE: Usernames can not be greater than 20 characters.')
-#    if len(user.data) < 5: 
-#      raise ValidationError('FAILURE: Usernames can not be less than 5 characters.')
-#    username = user.data
-#    for i in range(len(username)):
-#        if username[i].isalnum():
-#            continue
-#        else:
-#            raise ValidationError('FAILURE: Special characters are not allowed.')
+def user_validation(form, user):
+    if len(user.data) > 20:
+        flash('FAILURE: Usernames must be less than 20 characters in length.', 'danger')
+        raise ValidationError('FAILURE: Usernames can not be greater than 20 characters.')
+    if len(user.data) < 5: 
+        flash('FAILURE: Usernames must be above 5 characters in length.', 'danger')
+        raise ValidationError('FAILURE: Usernames can not be less than 5 characters.')
+    username = user.data
+    for i in range(len(username)):
+        if username[i].isalnum():
+            continue
+        elif username[i] == '_':
+            continue
+        else:
+            flash('FAILURE: Your username contains characters that are not allowed.', 'danger')
+            raise ValidationError('FAILURE: Your username contains characters that are not allowed.')
+
+def uid_validation(form, uid):
+    user_id = uid.data
+    if not user_id.isnumeric():
+        flash('FAILURE: Only numeric characters are allowed for a User ID.', 'danger')
+        raise ValidationError("FAILURE: Not a number.")
+    else:
+        pass
+
+
+
+#### End Validators ####
+
 
 class RegistrationForm(FlaskForm):
-    uname = StringField('Username', id='uname',  validators=[DataRequired()])
+    uname = StringField('Username', id='uname',  validators=[user_validation,DataRequired()])
     mfa = StringField('mfa', id='2fa', validators=[number_validation, validators.Optional()])
     pword = PasswordField('Password', id='pword', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
@@ -50,7 +67,7 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    uname = StringField('Username', id='uname', validators=[DataRequired()])
+    uname = StringField('Username', id='uname', validators=[user_validation, DataRequired()])
     mfa = PasswordField('2fa', id='2fa', validators=[number_validation, validators.Optional()])
     pword = PasswordField('Password', id='pword',  validators=[DataRequired()])
     remember = BooleanField('Remember Me')
@@ -77,11 +94,11 @@ class SubmitForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class UserLogActivity(FlaskForm):
-    userid = StringField('User Search: ', id='userid', validators=[DataRequired()])
+    userid = StringField('User ID Search: ', id='userid', validators=[uid_validation, DataRequired()])
     submit = SubmitField('Submit')
 
 class UserPostHistory(FlaskForm):
-    uname = StringField('Type the user you want to search: ', id='userquery', validators=[DataRequired()])
+    uname = StringField('Type the user you want to search: ', id='userquery', validators=[user_validation, DataRequired()])
     submit = SubmitField('Submit')
     
     def validate_uname(self, uname):
