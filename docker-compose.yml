@@ -8,3 +8,10 @@ services:
                         - 5000:8080
                 volumes:
                         - .:/AppSec_Flask_V
+
+                deploy:
+                        replicas: 4
+                        resources:
+                                limits:
+                                        cpus: '0.50'
+                                        memory: 50M
