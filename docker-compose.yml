@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+        web:
+                build: .
+                image: flask-app:latest
+                ports: 
+                        - 5000:8080
+                volumes:
+                        - .:/AppSec_Flask_V
