@@ -15,3 +15,9 @@ services:
                                 limits:
                                         cpus: '0.50'
                                         memory: 50M
+                secrets:
+                        - my_secret
+
+secrets:
+        my_secret:
+                external: true

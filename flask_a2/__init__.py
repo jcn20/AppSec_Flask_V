@@ -25,7 +25,7 @@ def initialize_extensions(app):
 
 def create_app(config_filename = None):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'dd17226a9fa0c52a51bac9addcec017a'
+    app.config['SECRET_KEY'] = open("/run/secrets/my_secret", "r").read().strip()
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     initialize_extensions(app)
     with app.app_context():
