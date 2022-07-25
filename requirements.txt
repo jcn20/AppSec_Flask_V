@@ -5,7 +5,7 @@ bcrypt==3.1.7
 beautifulsoup4==4.6.3
 bs4==0.0.1
 certifi==2018.8.13
-cffi==1.13.1
+cffi
 chardet==3.0.4
 Click==7.0
 DateTime==4.3
