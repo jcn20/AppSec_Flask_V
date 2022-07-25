@@ -6,7 +6,7 @@ RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y python3 
 RUN apt-get install -y sqlite3
 RUN apt-get install -y git
-RUN git clone https://github.com/jcn20/AppSec_Flask_V.git
+RUN git clone --depth 1 https://github.com/jcn20/AppSec_Flask_V.git
 RUN pip3 install python-dotenv
 WORKDIR /AppSec_Flask_V
 
