@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %} Query History {% endblock %}
+{% block content %}
+	<h3> Query History </h3>
+	<p id="numqueries">Total queries for the current user: {{ user.queries }}</p>
+	{% for post in posts %}
+	<a id="query{{ post.get_id() }}" href={{url_for('flask_app.query', post_id=post.id) }}>Query {{post.id}}</a>
+		<br>
+	{% endfor %}
+{% endblock %}

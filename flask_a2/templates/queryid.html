@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %} All Queries {% endblock %}
+{% block content %}
+	<h3> Query: </h3>
+		<p id="queryid">{{ post.get_id() }}</p>
+		<h4> Posted by: </h4>
+		<p id="username">{{ post.get_user() }} with timestamp: {{ post.get_date_posted() }}</p>
+		<h4> Text Originally Submitted: </h3>
+			<p id="querytext"> {{ post.get_content() }} </p>
+		<h4> Spell Checker Results: </h3>
+			<p id="queryresults"> {{ post.get_result() }}</p>
+{% endblock %}

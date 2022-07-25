@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %} User Activity History {% endblock %}
+{% block content %}
+	<h3> Login and Logout Activity History for All Users</h3>
+	
+	<h5> You can use this page to find queries made by any user. </h5>
+
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.userid.label }}<br>
+			{{ form.userid(cols=30, rows=4) }}<br>
+		{% for error in form.userid.errors %}
+			<span style="color:red;"> {{ error}}</span>
+	{% endfor %}
+		</p>
+		<p>{{ form.submit() }} </p> 
+	</form>
+
+	{% if user is defined %}
+		{% for user_activity in user.history.all() %}
+		<ul style="list-style-type:disc;">
+			<li id="login{{ user_activity.get_history_id() }}">Login ID#: {{ user_activity.get_history_id() }} </li>
+			<ul style="list-style-type:circle">
+				<li id="login{{ user_activity.get_history_id() }}_time">
+					Logged in at: {{ user_activity.get_login_time() }}
+				</li>
+				{% if user_activity.get_logout_time() == None %}
+					<li id="logout{{ user_activity.get_history_id() }}_time"> Logged Out: N/A
+					</li>
+				{% else %}
+					<li id="logout{{ user_activity.get_history_id() }}_time">
+                                		Logged Out at: {{ user_activity.get_logout_time() }}        
+					</li>
+				{%endif%}
+			</ul>
+		</ul>
+		{% endfor %}
+	
+	{% endif %}
+
+{% endblock %}
