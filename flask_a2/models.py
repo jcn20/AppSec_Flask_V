@@ -30,7 +30,6 @@ class User(db.Model, UserMixin):
         return f"User('{self.uname}', '{self.mfa}', '{self.image_file}')"
     
 
-
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
